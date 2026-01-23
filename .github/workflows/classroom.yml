@@ -1,0 +1,98 @@
+name: Autograding Tests
+'on':
+- push
+- repository_dispatch
+permissions:
+  checks: write
+  actions: read
+  contents: read
+jobs:
+  run-autograding-tests:
+    runs-on: ubuntu-latest
+    if: github.actor != 'github-classroom[bot]'
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Q07_56 Test
+      id: q07_56-test
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: Q07_56 Test
+        setup-command: javac Q07_56/TVSetClient.java
+        command: java -cp Q07_56 TVSetClient
+        input: ''
+        expected-output: |-
+          The brand of TV set #1 is Sony
+          The price of TV set #1 is 1249.99
+          TV set #2 is brand: RCA; price: ¤999.99
+          Original TV sets #1 and #2 are different.
+
+          Setting TV set #2's brand to Sony and price to $1249.99.
+          Original TV set #1 and modified TV set #2 are identical.
+        comparison-method: contains
+        timeout: 10
+        max-score: 2
+    - name: Q07_57 Test
+      id: q07_57-test
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: Q07_57 Test
+        setup-command: javac Q07_57/CourseGradeClient.java
+        command: java -cp Q07_57 CourseGradeClient
+        input: ''
+        expected-output: |-
+          The course of course grade #1 is CS1
+          The grade of course grade #1 is A
+          Course Grade #2 is course name: CS2; grade: B
+          Original CourseGrade #1 and #2 are different.
+          Original CourseGrade #1 and modified CourseGrade #2 are identical.
+
+          Setting CourseGrade #1 grade to 'Z'- an invalid value.
+          The new grade for CourseGrade #1 is I
+        comparison-method: contains
+        timeout: 10
+        max-score: 2
+    - name: Q07_59 Test
+      id: q07_59-test
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: Q07_59 Test
+        setup-command: javac Q07_59/StudentClient.java
+        command: java -cp Q07_59 StudentClient
+        input: ''
+        expected-output: |-
+          The name of student #1 is Jones
+          The social security number of student #1 is 222-88-1111
+          The GPA of student #1 is 3.7
+          Student #2 is name: Smith; SSN: 333-99-4444; GPA: 3.2
+          Original students #1 and #2 are different
+          Original student #1 and modified student #2 are identical
+        comparison-method: contains
+        timeout: 10
+        max-score: 2
+    - name: Q07_60 Test
+      id: q07_60-test
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: Q07_60 Test
+        setup-command: javac Q07_60/WebSiteStatsClient.java
+        command: java -cp Q07_60 WebSiteStatsClient
+        input: ''
+        expected-output: |-
+          The visitors of web site stats #1 is 12804
+          The type of web site stats #1 is government
+          Web Site Stats #2 is type: commercial; visitors: 45009
+          Original web site stats #1 and #2 are different
+          Original web site stats #1 and modified web site stats #2 are identical
+        comparison-method: contains
+        timeout: 10
+        max-score: 2
+    - name: Autograding Reporter
+      uses: classroom-resources/autograding-grading-reporter@v1
+      env:
+        Q07_56-TEST_RESULTS: "${{steps.q07_56-test.outputs.result}}"
+        Q07_57-TEST_RESULTS: "${{steps.q07_57-test.outputs.result}}"
+        Q07_59-TEST_RESULTS: "${{steps.q07_59-test.outputs.result}}"
+        Q07_60-TEST_RESULTS: "${{steps.q07_60-test.outputs.result}}"
+      with:
+        runners: q07_56-test,q07_57-test,q07_59-test,q07_60-test
