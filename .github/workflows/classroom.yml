@@ -18,7 +18,7 @@ jobs:
       uses: classroom-resources/autograding-io-grader@v1
       with:
         test-name: Q07_56 Test
-        setup-command: javac Q07_56/TVSetClient.java
+        setup-command: javac Q07_56/*.java
         command: java -cp Q07_56 TVSetClient
         input: ''
         expected-output: |-
@@ -37,7 +37,7 @@ jobs:
       uses: classroom-resources/autograding-io-grader@v1
       with:
         test-name: Q07_57 Test
-        setup-command: javac Q07_57/CourseGradeClient.java
+        setup-command: javac Q07_57/*.java
         command: java -cp Q07_57 CourseGradeClient
         input: ''
         expected-output: |-
@@ -57,7 +57,7 @@ jobs:
       uses: classroom-resources/autograding-io-grader@v1
       with:
         test-name: Q07_59 Test
-        setup-command: javac Q07_59/StudentClient.java
+        setup-command: javac Q07_59/*.java
         command: java -cp Q07_59 StudentClient
         input: ''
         expected-output: |-
@@ -75,7 +75,7 @@ jobs:
       uses: classroom-resources/autograding-io-grader@v1
       with:
         test-name: Q07_60 Test
-        setup-command: javac Q07_60/WebSiteStatsClient.java
+        setup-command: javac Q07_60/*.java
         command: java -cp Q07_60 WebSiteStatsClient
         input: ''
         expected-output: |-
